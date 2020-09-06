@@ -2,18 +2,23 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import { db } from './models/index.js';
+// import { db } from './models/index.js';
+import {gradeRouter} from './routes/gradeRouter.js';
 
-(async () => {
-  try {
-    await db.mongoose.connect(db.url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-  } catch (error) {
-    process.exit();
-  }
-})();
+const PORT = process.env.PORT || 3000
+
+// (async () => {
+//   try {
+//     await db.mongoose.connect(db.url, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log(`Conectado com sucesso!`)
+//   } catch (error) {
+//     console.log(`error ao conectar ao mongodb`)
+//     process.exit();
+//   }
+// })();
 
 const app = express();
 
@@ -30,4 +35,8 @@ app.get('/', (req, res) => {
   res.send('API em execucao');
 });
 
-app.listen(process.env.PORT || 8081, () => {});
+app.use(gradeRouter);
+
+app.listen(PORT, () => {
+  console.log(`Running api on http://localhost:${PORT}`)
+});
