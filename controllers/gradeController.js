@@ -45,7 +45,7 @@ const findOne = async (req, res) => {
 
   try {
     logger.info(`GET /grade - ${id}`);
-    const data = await Grade.findById(id);
+    const data = await Grade.findOne({_id: id});
     res.json(data);
 
   } catch (error) {
@@ -92,6 +92,7 @@ const removeAll = async (req, res) => {
   try {
     logger.info(`DELETE /grade`);
     await Grade.deleteMany();
+    res.send(true);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao excluir todos as Grades' });
     logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
