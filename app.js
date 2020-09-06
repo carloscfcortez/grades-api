@@ -26,20 +26,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-if(process.env.STAGE === 'Development'){
-  logger.info('Em dev')
-  app.use(
-    cors({
-      origin: 'http://localhost:3000',
-    })
-  );
-}else{
-  app.use(
-    cors({
-      origin: 'https://modulo4-desafio-app.herokuapp.com/',
-    })
-  );
-}
+app.use(cors());
 
 app.get('/', (req, res) => {
   logger.info('req')
